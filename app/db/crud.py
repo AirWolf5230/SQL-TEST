@@ -11,6 +11,9 @@ def create_category(db: Session, title: str) -> Category:
 def get_all_categories(db: Session) -> list[Category]:
     return db.query(Category).all()
 
+def get_category_by_id(db: Session, category_id: int) -> Category | None:
+    return db.query(Category).filter(Category.id == category_id).first()
+
 def update_category(db: Session, category_id: int, title: str) -> Category | None:
     obj = db.query(Category).filter(Category.id == category_id).first()
     if obj:
@@ -36,6 +39,12 @@ def create_book(db: Session, title: str, description: str, price: float, categor
 
 def get_all_books(db: Session) -> list[Book]:
     return db.query(Book).all()
+
+def get_book_by_id(db: Session, book_id: int) -> Book | None:
+    return db.query(Book).filter(Book.id == book_id).first()
+
+def get_books_by_category(db: Session, category_id: int) -> list[Book]:
+    return db.query(Book).filter(Book.category_id == category_id).all()
 
 def update_book(db: Session, book_id: int, **kwargs) -> Book | None:
     obj = db.query(Book).filter(Book.id == book_id).first()
